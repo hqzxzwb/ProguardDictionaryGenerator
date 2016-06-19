@@ -16,11 +16,12 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         preparePaint();
-        //汉字unicode编码范围0x4E00-0x9FFF
-        List<Holder> list = new ArrayList<>(0xA000 - 0x4E00);
-        for (int i = 0x4E00; i < 0xA000; i++) {
+        int start = 0x0100;
+        int end = 0x1100;
+        List<Holder> list = new ArrayList<>(end - start);
+        for (int i = start; i < end; i++) {
             char c = (char) i;
-            if (c < 0x4E00 || c >= 0xA000) continue;
+            if (c < start || c >= end) continue;
             String s = String.valueOf(c);
             list.add(new Holder(s, getSizeForString(s)));
         }
@@ -114,7 +115,7 @@ public class Main {
 
         @Override
         public int compareTo(Holder o) {
-            return -complexity + o.complexity;
+            return complexity - o.complexity;
         }
 
         @Override
